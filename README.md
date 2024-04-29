@@ -2,7 +2,7 @@
 
 # This Project is about a Reusable Mat Table in Angular V17
 
-## ![Default MatTable](https://github.com/SrikanthCIS/AngularV17-ReUsable-MatTable/blob/ceaa21978e383fae9f57ef3b7b0a3240cd8ee337/src/assets/images/Default-MatTable.png)
+![Default MatTable](https://github.com/SrikanthCIS/AngularV17-ReUsable-MatTable/blob/ceaa21978e383fae9f57ef3b7b0a3240cd8ee337/src/assets/images/Default-MatTable.png)
 
 ![Selectable Rows With Action MatTable](https://github.com/SrikanthCIS/AngularV17-ReUsable-MatTable/blob/ceaa21978e383fae9f57ef3b7b0a3240cd8ee337/src/assets/images/Selectable-MatTable.png)
 
