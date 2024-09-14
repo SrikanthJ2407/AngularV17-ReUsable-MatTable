@@ -16,6 +16,12 @@ export class AppComponent implements OnInit {
   selectedRecords: any[] = [];
   tableListCols: Array<Column> = [
     {
+      columnDef: 'sno',
+      header: 'S.NO',
+      cell: (element: any, index: number) => `${index + 1}`,
+      isSelectable: false,
+    },
+    {
       columnDef: 'name',
       header: 'Name',
       cell: (element: Record<string, any>) => `${element['name']}`,
@@ -76,6 +82,12 @@ export class AppComponent implements OnInit {
       isSelectable: true,
     },
     {
+      columnDef: 'sno',
+      header: 'S.NO',
+      cell: (element: any, index: number) => `${index + 1}`,
+      isSelectable: false,
+    },
+    {
       columnDef: 'name',
       header: 'Name',
       cell: (element: Record<string, any>) => `${element['name']}`,
@@ -111,6 +123,12 @@ export class AppComponent implements OnInit {
       header: '',
       cell: (element: Record<string, any>) => ``,
       isSelectable: true,
+    },
+    {
+      columnDef: 'sno',
+      header: 'S.NO',
+      cell: (element: any, index: number) => `${index + 1}`,
+      isSelectable: false,
     },
     {
       columnDef: 'name',

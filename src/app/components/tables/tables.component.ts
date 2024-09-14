@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -29,6 +29,7 @@ import { SelectionModel } from '@angular/cdk/collections';
     MatInputModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatSortModule,
   ],
   templateUrl: './tables.component.html',
   styleUrl: './tables.component.scss',
@@ -61,6 +62,7 @@ export class TablesComponent implements OnInit {
         changes['tableData'].currentValue
       );
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     }
   }
 

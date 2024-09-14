@@ -7,72 +7,78 @@
     #input
   />
 </mat-form-field>
-<table mat-table [dataSource]="dataSource" class="">
+
+<table mat-table [dataSource]="dataSource" matSort class="">
   <ng-container
     *ngFor="let disCol of tableColumns; let colIndex = index"
-    matColumnDef="{{ disCol.columnDef }}"
+    [matColumnDef]="disCol.columnDef"
   >
-    <th mat-header-cell *matHeaderCellDef>
-      @if (disCol.isSelectable == true) {
-      <!-- Selectable Header -->
-      <mat-checkbox
-        (change)="$event ? masterToggle() : null"
-        [checked]="selection.hasValue() && isAllSelected()"
-        [indeterminate]="selection.hasValue() && !isAllSelected()"
-      >
-      </mat-checkbox>
-      }
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+      <ng-container *ngIf="disCol.isSelectable">
+        <!-- Selectable Header -->
+        <mat-checkbox
+          (change)="$event ? masterToggle() : null"
+          [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()"
+        >
+        </mat-checkbox>
+      </ng-container>
       {{ disCol.header }}
     </th>
 
-    <td mat-cell *matCellDef="let element">
-      <!-- If the Element is not a Link  -->
-      <span *ngIf="!disCol.isLink; else link">
-        @if (disCol.isDate == true) {
-        <!-- If Date Column -->
-        {{ disCol.cell(element) }}
-        } @else if (disCol.isAction == true) {
-        <!-- If Action Column -->
-        <a
-          class="text-secondary mx-3"
-          *ngIf="disCol.showEdit"
-          (click)="edit(element)"
+    <td mat-cell *matCellDef="let element; let i = index">
+      <!-- If the Element is not a Link -->
+      <ng-container *ngIf="!disCol.isLink; else link">
+        <ng-container *ngIf="disCol.isDate">
+          <!-- If Date Column -->
+          {{ disCol.cell(element, i) }}
+        </ng-container>
+        <ng-container *ngIf="disCol.isAction">
+          <!-- If Action Column -->
+          <a
+            class="text-secondary mx-3"
+            *ngIf="disCol.showEdit"
+            (click)="edit(element)"
+          >
+            <i class="bi bi-pencil"></i>
+          </a>
+          <a
+            class="text-danger"
+            *ngIf="disCol.showDelete"
+            (click)="delete(element)"
+          >
+            <i class="bi bi-trash"></i>
+          </a>
+        </ng-container>
+        <ng-container *ngIf="disCol.isSelectable">
+          <!-- Selectable Rows -->
+          <mat-checkbox
+            (click)="$event.stopPropagation()"
+            (change)="$event ? onSelect(element) : null"
+            [checked]="selection.isSelected(element)"
+          >
+          </mat-checkbox>
+        </ng-container>
+        <ng-container
+          *ngIf="!disCol.isDate && !disCol.isAction && !disCol.isSelectable"
         >
-          <i class="bi bi-pencil"></i>
-        </a>
-        <a
-          class="text-danger"
-          *ngIf="disCol.showDelete"
-          (click)="delete(element)"
-        >
-          <i class="bi bi-trash"></i>
-        </a>
-        } @else if (disCol.isSelectable == true) {
-        <!-- Selectable Rows -->
-        <mat-checkbox
-          (click)="$event.stopPropagation()"
-          (change)="$event ? onSelect(element) : null"
-          [checked]="selection.isSelected(element)"
-        >
-        </mat-checkbox>
-        } @else {
-        {{ disCol.cell(element) }}
-        }
-      </span>
+          {{ disCol.cell(element, i) }}
+        </ng-container>
+      </ng-container>
 
-      <!-- If the Element is  a Link  -->
+      <!-- If the Element is a Link -->
       <ng-template #link>
         <a [routerLink]="[disCol.url]" class="text-decoration-none">
-          {{ disCol.cell(element) }}
+          {{ disCol.cell(element, i) }}
         </a>
       </ng-template>
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
+
 <mat-paginator
   [pageSizeOptions]="[5, 10, 25, 100]"
   aria-label="Select page of users"
